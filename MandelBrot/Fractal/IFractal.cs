@@ -4,8 +4,7 @@
     {
         MandelbrotSet = 0,
         JuliaSet = 1,
-        BurningShip = 2,
-        Lyapunov = 3
+        BurningShip = 2
     }
 
     public interface IFractal
