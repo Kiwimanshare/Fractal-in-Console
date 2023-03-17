@@ -22,6 +22,8 @@
             SetCurrentColor();
 
             Fractal = CreateFractal(fractal);
+
+            Fractal.Draw();
         }
 
         public IFractal CreateFractal(FractalTyps fractal)
@@ -32,6 +34,8 @@
                     return new MandelbrotSet(Width, Height, currentcolorChars);
                 case FractalTyps.JuliaSet:
                     return new JuliaSet(Width, Height, currentcolorChars);
+                case FractalTyps.BurningShip:
+                    return new BurningShip(Width, Height, currentcolorChars);
                 default:
                     return new MandelbrotSet(Width, Height, currentcolorChars);
             }
@@ -42,15 +46,6 @@
             currentPaletteIndex = (currentPaletteIndex + 1) % colorPalettes.Count;
             currentcolorChars = colorPalettes[currentPaletteIndex].ColorChars.ToArray();
         }
-
-        private void ChangeCurrentPaletteIndex(int value)
-        {
-            if (value > 0)
-                currentPaletteIndex = Math.Min(value, colorPalettes.Count);
-            else
-                currentPaletteIndex = 0;
-        }
-
         private void SetCurrentColor()
         {
             colorPalettes = ColorPalettBuilder.BuildColorPalette();
@@ -67,12 +62,12 @@
             {
                 while (!Console.KeyAvailable)
                 {
-                    var key = Console.ReadKey(true);
+                    var key = Console.ReadKey(true).Key;
                     bool capsLockPressed = Console.CapsLock;
                     int stepSize = capsLockPressed ? 10 : 1;
 
 
-                    switch (key.Key)
+                    switch (key)
                     {
                         case ConsoleKey.UpArrow:
                             cursorPosX = Math.Max(cursorPosX - stepSize, 0);

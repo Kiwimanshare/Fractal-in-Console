@@ -1,13 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Fractal
+﻿namespace Fractal
 {
-    public class JuliaSet : FractalBase
+    public class BurningShip : FractalBase
     {
-        private double cReal = -0.8;
-        private double cImaginary = 0.156;
-        public JuliaSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
+        public BurningShip(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 
         public override void Draw()
         {
@@ -22,7 +17,7 @@ namespace Fractal
                     double real = x * (realMax - realMin) / Width + realMin;
                     double imaginary = y * (imaginaryMax - imaginaryMin) / Height + imaginaryMin;
 
-                    int iterations = JuliaIterations(real, imaginary);
+                    int iterations = BurningShipIterations(real, imaginary);
 
                     if (iterations == -1)
                     {
@@ -50,30 +45,30 @@ namespace Fractal
 
             Console.ResetColor();
         }
-        private int JuliaIterations(double real, double imaginary, double threshold = 4.0, int maxIterations = 1000)
+
+        private int BurningShipIterations(double real, double imaginary)
         {
-            double realPart = real;
-            double imaginaryPart = imaginary;
+            double zReal = 0.0;
+            double zImaginary = 0.0;
+            double zRealSquared = 0.0;
+            double zImaginarySquared = 0.0;
 
-            for (int iteration = 0; iteration < maxIterations; iteration++)
+            int iteration = 0;
+            while (zRealSquared + zImaginarySquared < threshold && iteration < maxIterations)
             {
-                double realSquared = realPart * realPart;
-                double imaginarySquared = imaginaryPart * imaginaryPart;
+                double newZReal = zRealSquared - zImaginarySquared + real;
+                double newZImaginary = Math.Abs(2 * zReal * zImaginary) + imaginary;
 
-                if (realSquared + imaginarySquared > threshold)
-                {
-                    return iteration;
-                }
+                zReal = newZReal;
+                zImaginary = newZImaginary;
 
-                double newRealPart = realSquared - imaginarySquared + cReal;
-                double newImaginaryPart = 2 * realPart * imaginaryPart + cImaginary;
+                zRealSquared = zReal * zReal;
+                zImaginarySquared = zImaginary * zImaginary;
 
-                realPart = newRealPart;
-                imaginaryPart = newImaginaryPart;
+                iteration++;
             }
 
-            return -1;
+            return iteration == maxIterations ? -1 : iteration;
         }
     }
 }
-

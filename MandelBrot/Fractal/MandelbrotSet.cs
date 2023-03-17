@@ -1,33 +1,9 @@
 ﻿namespace Fractal
 {
-    public class MandelbrotSet : IFractal
+    public class MandelbrotSet : FractalBase
     {
-        public int Width { get; protected set; }
-        public int Height { get; protected set; }
-
-        private double realMin = -2.0;
-        private double realMax = 1.0;
-        private double imaginaryMin = -1.0;
-        private double imaginaryMax = 1.0;
-
-        private ColorChar[] ColorChars;
-
-        public MandelbrotSet() { }
-        public MandelbrotSet(int width, int height, ColorChar[] colorChars)
-        {
-            Width = width;
-            Height = height;
-            ColorChars = colorChars;
-            Draw();
-        }
-
-        public void ChangeColor(ColorChar[] colorChars)
-        {
-            ColorChars = colorChars;
-            Draw();
-        }
-
-        public void Draw()
+        public MandelbrotSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
+        public override void Draw()
         {
             ColorChar[,] buffer = new ColorChar[Width, Height];
 
@@ -68,22 +44,6 @@
 
             Console.ResetColor();
         }
-
-        public void Zoom(int cursorPosX, int cursorPosY, double zoomFactor)
-        {
-            double newWidth = (realMax - realMin) / zoomFactor;
-            double newHeight = (imaginaryMax - imaginaryMin) / zoomFactor;
-
-            double cursorReal = cursorPosY * (realMax - realMin) / Width + realMin;
-            double cursorImaginary = cursorPosX * (imaginaryMax - imaginaryMin) / Height + imaginaryMin;
-
-            realMin = cursorReal - newWidth / 2.0;
-            realMax = cursorReal + newWidth / 2.0;
-
-            imaginaryMin = cursorImaginary - newHeight / 2.0;
-            imaginaryMax = cursorImaginary + newHeight / 2.0;
-        }
-
         private int MandelbrotIterations(double real, double imaginary, double threshold = 4.0, int maxIterations = 1000)
         {
             double realPart = 0;
