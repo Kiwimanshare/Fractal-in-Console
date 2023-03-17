@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace Mandelbrot_ASCII
+﻿namespace Fractal
 {
     class Program
     { 
         static void Main(string[] args)
         {
-            MandelbrotSet ms = new MandelbrotSet(180, 64);
-            ms.Controller();
+            FractalController fc = new FractalController(180, 60, FractalTyps.JuliaSet);
+            fc.Run();
         }
     }
 }

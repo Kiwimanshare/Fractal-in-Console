@@ -1,6 +1,6 @@
-﻿namespace MandelBrot
+﻿namespace Fractal
 {
-    class ColorPalette
+    public class ColorPalette
     {
         public List<ColorChar> ColorChars { get; set; }
 
@@ -9,5 +9,4 @@
             ColorChars = colorChars;
         }
     }
-
 }
