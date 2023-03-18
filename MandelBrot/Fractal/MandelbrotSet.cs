@@ -1,6 +1,6 @@
 ﻿namespace Fractal
 {
-    public class MandelbrotSet : FractalBase
+    public class MandelbrotSet : BaseFractal
     {
         public MandelbrotSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
         public override void Draw()

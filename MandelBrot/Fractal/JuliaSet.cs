@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Fractal
 {
-    public class JuliaSet : FractalBase
+    public class JuliaSet : BaseFractal
     {
         private double cReal = -0.8;
         private double cImaginary = 0.156;

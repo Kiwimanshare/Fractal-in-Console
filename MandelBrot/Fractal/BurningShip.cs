@@ -1,6 +1,6 @@
 ﻿namespace Fractal
 {
-    public class BurningShip : FractalBase
+    public class BurningShip : BaseFractal
     {
         public BurningShip(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 

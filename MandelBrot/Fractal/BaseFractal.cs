@@ -1,8 +1,7 @@
 ﻿namespace Fractal
 {
-    public class FractalBase : IFractal
+    public class BaseFractal : IFractal
     {
-
         protected ColorChar[] ColorChars;
         protected double imaginaryMax = 1.0;
         protected double imaginaryMin = -2.0;
@@ -15,7 +14,7 @@
         public int Height { get; protected set; }
         public int Width { get; protected set; }
 
-        public FractalBase(int width, int height, ColorChar[] colorChars)
+        public BaseFractal(int width, int height, ColorChar[] colorChars)
         {
             Width = width;
             Height = height;
@@ -25,10 +24,9 @@
         public void ChangeColor(ColorChar[] colorChars)
         {
             ColorChars = colorChars;
-            Draw();
         }
 
-        public void Zoom(int cursorPosX, int cursorPosY, double zoomFactor)
+        public virtual void Zoom(int cursorPosX, int cursorPosY, double zoomFactor)
         {
             double newWidth = (realMax - realMin) / zoomFactor;
             double newHeight = (imaginaryMax - imaginaryMin) / zoomFactor;

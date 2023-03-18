@@ -2,24 +2,25 @@
 {
     public class FractalController
     {
+        private const double minZoomOut = 0.25;
+        private const double maxZoomIn = 256.0;
+
         public int Width;
         public int Height;
 
-        private List<ColorPalette> colorPalettes;
+        private List<ColorPalette> ColorPalettes;
         private int currentPaletteIndex = 0;
         private ColorChar[] currentcolorChars;
 
         private IFractal Fractal;
 
-        public FractalController(int width, int height, FractalTyps fractal)
+        public FractalController(int width, int height, FractalTyps fractal, List<ColorPalette> colorPalettes)
         {
             Width = width;
             Height = height;
 
-            Console.WindowWidth = Width + 1;
-            Console.WindowHeight = Height + 1;
-
-            SetCurrentColor();
+            ColorPalettes = colorPalettes;
+            ChangePalette();
 
             Fractal = CreateFractal(fractal);
 
@@ -43,68 +44,86 @@
 
         public void ChangePalette()
         {
-            currentPaletteIndex = (currentPaletteIndex + 1) % colorPalettes.Count;
-            currentcolorChars = colorPalettes[currentPaletteIndex].ColorChars.ToArray();
+            currentPaletteIndex = (currentPaletteIndex + 1) % ColorPalettes.Count;
+            currentcolorChars = ColorPalettes[currentPaletteIndex].ColorChars.ToArray();
         }
-        private void SetCurrentColor()
+
+        public void AddColorPalette(ColorPalette palette)
         {
-            colorPalettes = ColorPalettBuilder.BuildColorPalette();
-            currentcolorChars = colorPalettes[currentPaletteIndex].ColorChars.ToArray();
+            ColorPalettes.Add(palette);
         }
 
         public void Run()
         {
             int cursorPosX = 0;
             int cursorPosY = 0;
-            double zoomFactor = 1.0;
+
+            Console.SetCursorPosition(cursorPosY, cursorPosX);
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
                 while (!Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true).Key;
-                    bool capsLockPressed = Console.CapsLock;
-                    int stepSize = capsLockPressed ? 10 : 1;
-
+                    int stepSize = Console.CapsLock ? 10 : 1;
+                    bool draw;
 
                     switch (key)
                     {
                         case ConsoleKey.UpArrow:
                             cursorPosX = Math.Max(cursorPosX - stepSize, 0);
+                            draw = false;
                             break;
                         case ConsoleKey.DownArrow:
                             cursorPosX = Math.Min(cursorPosX + stepSize, Height);
+                            draw = false;
                             break;
                         case ConsoleKey.LeftArrow:
                             cursorPosY = Math.Max(cursorPosY - stepSize, 0);
+                            draw = false;
                             break;
                         case ConsoleKey.RightArrow:
                             cursorPosY = Math.Min(cursorPosY + stepSize, Width);
+                            draw = false;
+                            break;
+                        case ConsoleKey.D1:
+                            Fractal = CreateFractal(FractalTyps.MandelbrotSet);
+                            draw = true;
+                            break;
+                        case ConsoleKey.D2:
+                            Fractal = CreateFractal(FractalTyps.JuliaSet);
+                            draw = true;
+                            break;
+                        case ConsoleKey.D3:
+                            Fractal = CreateFractal(FractalTyps.BurningShip);
+                            draw = true;
                             break;
                         case ConsoleKey.X:
-                            zoomFactor /= 0.5;
-                            ZoomAndDraw(cursorPosX, cursorPosY, zoomFactor);
+                            Fractal.Zoom(cursorPosX, cursorPosY, 2.0);
+                            draw = true;
                             break;
                         case ConsoleKey.Y:
-                            zoomFactor *= 0.5;
-                            ZoomAndDraw(cursorPosX, cursorPosY, zoomFactor);
+                            Fractal.Zoom(cursorPosX, cursorPosY, 0.5);
+                            draw = true;
                             break;
                         case ConsoleKey.Spacebar:
                             ChangePalette();
                             Fractal.ChangeColor(currentcolorChars);
+                            draw = true;
+                            break;
+                        case ConsoleKey.Enter:
+                            Fractal.Zoom(cursorPosX, cursorPosY, 1.0);
+                            draw = true;
                             break;
                         default:
                             continue;
                     }
+
                     Console.SetCursorPosition(cursorPosY, cursorPosX);
+                    if (draw)
+                        Fractal.Draw();
                 }
             } 
-        }
-
-        private void ZoomAndDraw(int X, int Y, double Z)
-        {
-            Fractal.Zoom(X, Y, Z);
-            Fractal.Draw();
         }
     }
 }
