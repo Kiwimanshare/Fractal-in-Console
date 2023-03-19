@@ -64,6 +64,34 @@
             Console.CursorVisible = true;
         }
 
+        public void Draw2()
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
+
+            ColorChar[,] buffer = Iterate();
+
+            object lockObj = new object(); 
+
+            Parallel.For(0, Height, y =>
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    ColorChar colorChar = buffer[x, y];
+                    lock (lockObj) 
+                    {
+                        Console.ForegroundColor = colorChar.ForegroundColor;
+                        Console.BackgroundColor = colorChar.BackgroundColor;
+                        Console.SetCursorPosition(x, y); 
+                        Console.Write(colorChar.Character);
+                    }
+                }
+            });
+
+            Console.ResetColor();
+            Console.CursorVisible = true;
+        }
+
         public virtual ColorChar[,] Iterate()
         {
             return new ColorChar[Width, Height];
