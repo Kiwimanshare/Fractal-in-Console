@@ -84,7 +84,7 @@
                         break;
                 }
 
-                if(displayFractal)
+                if (displayFractal)
                 {
                     displayFractal = false;
                     FractalController fc = new FractalController(width, height, selectedFractal, colorPalettes);

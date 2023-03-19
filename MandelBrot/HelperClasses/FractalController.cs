@@ -2,9 +2,6 @@
 {
     public class FractalController
     {
-        private const double minZoomOut = 0.25;
-        private const double maxZoomIn = 256.0;
-
         public int Width;
         public int Height;
 

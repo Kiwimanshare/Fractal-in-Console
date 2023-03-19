@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Fractal
+﻿namespace Fractal
 {
     public static class ColorPalettBuilder
     {
