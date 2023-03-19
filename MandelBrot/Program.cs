@@ -23,6 +23,7 @@
             "1:             Show Mandelbrot set",
             "2:             Show Julia set",
             "3:             Show Burning Ship",
+            "ESC:           Back to Menu",
             "Ctrl+C:        Exit program"
         };
 
