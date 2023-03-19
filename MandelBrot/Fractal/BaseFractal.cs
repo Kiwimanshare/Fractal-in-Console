@@ -41,9 +41,32 @@
             imaginaryMax = cursorImaginary + newHeight / 2.0;
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
-            Console.WriteLine("No Function implemented");
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
+
+            ColorChar[,] buffer = Iterate();
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    ColorChar colorChar = buffer[x, y];
+                    Console.ForegroundColor = colorChar.ForegroundColor;
+                    Console.BackgroundColor = colorChar.BackgroundColor;
+                    Console.Write(colorChar.Character);
+                }
+                Console.WriteLine();
+            }
+
+            Console.ResetColor();
+            Console.CursorVisible = true;
+        }
+
+        public virtual ColorChar[,] Iterate()
+        {
+            return new ColorChar[Width, Height];
         }
     }
 }

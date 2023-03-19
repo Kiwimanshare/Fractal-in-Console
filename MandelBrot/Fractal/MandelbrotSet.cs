@@ -3,11 +3,10 @@
     public class MandelbrotSet : BaseFractal
     {
         public MandelbrotSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
-        public override void Draw()
+
+        public override ColorChar[,] Iterate()
         {
             ColorChar[,] buffer = new ColorChar[Width, Height];
-
-            Console.SetCursorPosition(0, 0);
 
             Parallel.For(0, Height, y =>
             {
@@ -30,20 +29,9 @@
                 }
             });
 
-            for (int y = 0; y < Height; y++)
-            {
-                for (int x = 0; x < Width; x++)
-                {
-                    ColorChar colorChar = buffer[x, y];
-                    Console.ForegroundColor = colorChar.ForegroundColor;
-                    Console.BackgroundColor = colorChar.BackgroundColor;
-                    Console.Write(colorChar.Character);
-                }
-                Console.WriteLine();
-            }
-
-            Console.ResetColor();
+            return buffer;
         }
+
         private int MandelbrotIterations(double real, double imaginary, double threshold = 4.0, int maxIterations = 1000)
         {
             double realPart = 0;
