@@ -330,8 +330,8 @@ namespace Fractal
                     Console.WriteLine(" (Foreground color: {0}, Background color: {1}, Character: '{2}')", selectedForegroundColor, selectedBackgroundColor, selectedCharacter);
 
                     // Pfeiltasten für die Zeichenauswahl
-                    ConsoleKeyInfo key2 = Console.ReadKey(true);
-                    switch (key2.Key)
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+                    switch (key.Key)
                     {
                         case ConsoleKey.LeftArrow:
                             // Ausgewähltes Zeichen ändern
@@ -372,8 +372,8 @@ namespace Fractal
                     Console.WriteLine(" (Foreground color: {0}, Background color: {1}, Character: '{2}')", selectedForegroundColor, selectedBackgroundColor, selectedCharacter);
 
                     // Pfeiltasten für die Farbauswahl
-                    ConsoleKeyInfo key = Console.ReadKey(true);
-                    switch (key.Key)
+                    ConsoleKeyInfo key2 = Console.ReadKey(true);
+                    switch (key2.Key)
                     {
                         case ConsoleKey.LeftArrow:
                             // Ausgewählte Farbe ändern
@@ -425,7 +425,7 @@ namespace Fractal
                 Console.WriteLine();
                 Console.Write("Do you want to add another color? (Y/N)");
                 ConsoleKeyInfo key3 = Console.ReadKey(true);
-                if (key3.Key == ConsoleKey.Y)
+                if (key3.Key == ConsoleKey.Y || key3.Key == ConsoleKey.Enter)
                 {
                     creatingCustomPalette = true;
                 }

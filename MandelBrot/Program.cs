@@ -8,9 +8,8 @@
             "2 -                   Julia Set",
             "3 -                Burning Ship",
             "4 - Create custom color palette",
-            "5 - Fractal controller controls",
-            "6 -            Generate fractal",
-            "7 -                        Exit"
+            "5 -              Show Controlls",
+            "6 -                        Exit"
         };
 
         private static string[] fractalControllerControls = new string[]
@@ -24,7 +23,6 @@
             "1:             Show Mandelbrot set",
             "2:             Show Julia set",
             "3:             Show Burning Ship",
-            "ESC:           Back to main menue",
             "Ctrl+C:        Exit program"
         };
 
@@ -53,37 +51,44 @@
             FractalTyps selectedFractal = FractalTyps.MandelbrotSet;
             List<ColorPalette> colorPalettes = ColorPalettBuilder.BuildColorPalette();
 
-            int option = 1;
+            int option = 0;
+            bool displayFractal = false;
 
             while (true)
             {
-                option = ShowMenu(width, height, "Main menu", menuOptions, option - 1);
+                option = ShowMenu(width, height, "Main menu", menuOptions, option);
 
                 switch (option)
                 {
-                    case 1:
+                    case 0:
                         selectedFractal = FractalTyps.MandelbrotSet;
+                        displayFractal = true;
+                        break;
+                    case 1:
+                        selectedFractal = FractalTyps.JuliaSet;
+                        displayFractal = true;
                         break;
                     case 2:
-                        selectedFractal = FractalTyps.JuliaSet;
+                        selectedFractal = FractalTyps.BurningShip;
+                        displayFractal = true;
                         break;
                     case 3:
-                        selectedFractal = FractalTyps.BurningShip;
-                        break;
-                    case 4:
                         ColorPalette newPalette = ColorPalettBuilder.CreateCustomPalette();
                         colorPalettes.Add(newPalette);
                         break;
-                    case 5:
+                    case 4:
                         ShowInfos(width, height, fractalControllerControls);
                         break;
-                    case 6:
-                        FractalController fc = new FractalController(width, height, selectedFractal, colorPalettes);
-                        fc.Run();
-                        break;
-                    case 7:
+                    case 5:
                         Environment.Exit(0);
                         break;
+                }
+
+                if(displayFractal)
+                {
+                    displayFractal = false;
+                    FractalController fc = new FractalController(width, height, selectedFractal, colorPalettes);
+                    fc.Run();
                 }
             }
         }
@@ -105,7 +110,7 @@
                 Console.Write(options[i].PadLeft(width / 2 + options[i].Length / 2));
             }
 
-            Console.SetCursorPosition(cursorLeft + 2, cursorTop + currentOption + 2);
+            Console.SetCursorPosition(cursorLeft, cursorTop + currentOption + 2);
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write(options[currentOption].PadLeft(width / 2 + options[currentOption].Length / 2));
@@ -117,12 +122,12 @@
 
                 if (keyInfo.Key == ConsoleKey.UpArrow && currentOption > 0)
                 {
-                    Console.SetCursorPosition(cursorLeft + 2, cursorTop + currentOption + 2);
+                    Console.SetCursorPosition(cursorLeft, cursorTop + currentOption + 2);
                     Console.Write(options[currentOption].PadLeft(width / 2 + options[currentOption].Length / 2));
 
                     currentOption--;
 
-                    Console.SetCursorPosition(cursorLeft + 2, cursorTop + currentOption + 2);
+                    Console.SetCursorPosition(cursorLeft, cursorTop + currentOption + 2);
                     Console.BackgroundColor = ConsoleColor.Gray;
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(options[currentOption].PadLeft(width / 2 + options[currentOption].Length / 2));
@@ -131,12 +136,12 @@
 
                 if (keyInfo.Key == ConsoleKey.DownArrow && currentOption < options.Length - 1)
                 {
-                    Console.SetCursorPosition(cursorLeft + 2, cursorTop + currentOption + 2);
+                    Console.SetCursorPosition(cursorLeft, cursorTop + currentOption + 2);
                     Console.Write(options[currentOption].PadLeft(width / 2 + options[currentOption].Length / 2));
 
                     currentOption++;
 
-                    Console.SetCursorPosition(cursorLeft + 2, cursorTop + currentOption + 2);
+                    Console.SetCursorPosition(cursorLeft, cursorTop + currentOption + 2);
                     Console.BackgroundColor = ConsoleColor.Gray;
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(options[currentOption].PadLeft(width / 2 + options[currentOption].Length / 2));
@@ -146,13 +151,13 @@
                 if (keyInfo.Key == ConsoleKey.Spacebar || keyInfo.Key == ConsoleKey.Enter)
                 {
                     Console.CursorVisible = true;
-                    return currentOption + 1;
+                    return currentOption;
                 }
 
                 if (keyInfo.Key == ConsoleKey.Escape)
                 {
                     Console.CursorVisible = true;
-                    return -1;
+                    return 0;
                 }
             }
         }
