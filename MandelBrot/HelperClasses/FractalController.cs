@@ -1,4 +1,6 @@
-﻿namespace Fractal
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace Fractal
 {
     public class FractalController
     {
@@ -55,7 +57,7 @@
             int cursorPosX = 0;
             int cursorPosY = 0;
 
-            Console.SetCursorPosition(cursorPosY, cursorPosX);
+            CursorToCenter(ref cursorPosX, ref cursorPosY);
 
             ConsoleKey key = ConsoleKey.RightArrow;
 
@@ -111,14 +113,23 @@
                         break;
                     case ConsoleKey.Enter:
                         Fractal.Zoom(cursorPosX, cursorPosY, 1.0);
+                        CursorToCenter(ref cursorPosX, ref cursorPosY);
                         draw = true;
                         break;
                 }
 
-                Console.SetCursorPosition(cursorPosY, cursorPosX);
                 if (draw)
                     Fractal.Draw();
+
+                Console.SetCursorPosition(cursorPosY, cursorPosX);
             }
+        }
+
+        private void CursorToCenter(ref int x, ref int y)
+        {
+            y = Width / 2;
+            x = Height / 2;
+            Console.SetCursorPosition(y, x);
         }
     }
 }
