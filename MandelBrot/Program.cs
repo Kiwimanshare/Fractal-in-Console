@@ -1,4 +1,7 @@
-﻿namespace Fractal
+﻿using Fractals.DrawEngine;
+using System.Reflection.PortableExecutable;
+
+namespace Fractal
 {
     class Program
     {
@@ -7,10 +10,18 @@
             "1 -              Mandelbrot Set",
             "2 -                   Julia Set",
             "3 -                Burning Ship",
-            "4 - Create custom color palette",
-            "5 -              Show Controlls",
-            "6 -                        Exit"
+            "4 -             Set Draw Engine",
+            "5 - Create custom color palette",
+            "6 -              Show Controlls",
+            "7 -                        Exit"
         };
+
+        private static string[] drawEngineMenu = new string[]
+{
+            "1 -   Top To Bottom Draw-Engine",
+            "2 -        Parallel Draw-Engine",
+            "3 -            Fast Draw-Engine"
+};
 
         private static string[] fractalControllerControls = new string[]
         {
@@ -53,6 +64,7 @@
             List<ColorPalette> colorPalettes = ColorPalettBuilder.BuildColorPalette();
 
             int option = 0;
+            int drawEngine = 0;
             bool displayFractal = false;
 
             while (true)
@@ -74,13 +86,16 @@
                         displayFractal = true;
                         break;
                     case 3:
+                        drawEngine = ShowMenu(width, height, "Set Draw Engine", drawEngineMenu);
+                        break;
+                    case 4:
                         ColorPalette newPalette = ColorPalettBuilder.CreateCustomPalette();
                         colorPalettes.Add(newPalette);
                         break;
-                    case 4:
+                    case 5:
                         ShowInfos(width, height, fractalControllerControls);
                         break;
-                    case 5:
+                    case 6:
                         Environment.Exit(0);
                         break;
                 }
@@ -88,10 +103,31 @@
                 if (displayFractal)
                 {
                     displayFractal = false;
-                    FractalController fc = new FractalController(width, height, selectedFractal, colorPalettes);
-                    fc.Run();
+
+                    switch (drawEngine)
+                    {
+                        case 0:
+                            RunFractal<TopBottomDrawEngine>(width, height, selectedFractal, colorPalettes);
+                            break;
+                        case 1:
+                            RunFractal<ParallelDrawEngine>(width, height, selectedFractal, colorPalettes);
+                            break;                        
+                        case 2:
+                            RunFractal<FastDrawEngine>(width, height, selectedFractal, colorPalettes);
+                            break;
+                        default:
+                            RunFractal<TopBottomDrawEngine>(width, height, selectedFractal, colorPalettes);
+                            break;
+                    }                    
                 }
             }
+        }
+
+        public static void RunFractal<T>(int width, int height, FractalTyps selectedFractal, List<ColorPalette> colorPalettes) 
+            where T : IDrawEngine, new()
+        {
+            FractalController<T> fc = new FractalController<T>(width, height, selectedFractal, colorPalettes);
+            fc.Run();
         }
 
         static int ShowMenu(int width, int height, string title, string[] options, int currentOption = 0)

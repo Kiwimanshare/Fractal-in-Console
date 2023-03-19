@@ -1,6 +1,9 @@
-﻿namespace Fractal
+﻿using Fractals.DrawEngine;
+
+namespace Fractal
 {
-    public class JuliaSet : BaseFractal
+    public class JuliaSet<T> : BaseFractal<T>
+        where T : IDrawEngine, new()
     {
         private double cReal = -0.8;
         private double cImaginary = 0.156;

@@ -7,25 +7,18 @@ using System.Threading.Tasks;
 
 namespace Fractals.DrawEngine
 {
-    public class TopBottomDrawEngine : IDrawEngine
+    public class TopBottomDrawEngine : BaseDrawEngine
     {
-        public BaseFractal Fractal { get; set; }
-
-        public TopBottomDrawEngine(BaseFractal fractal)
-        {
-            Fractal = fractal;
-        }
-
-        public void Draw()
+        public override void Draw(int height, int width)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            ColorChar[,] buffer = Fractal.Iterate();
+            ColorChar[,] buffer = IterateFunc.Invoke();
 
-            for (int y = 0; y < Fractal.Height; y++)
+            for (int y = 0; y < height; y++)
             {
-                for (int x = 0; x < Fractal.Width; x++)
+                for (int x = 0; x < width; x++)
                 {
                     ColorChar colorChar = buffer[x, y];
                     Console.ForegroundColor = colorChar.ForegroundColor;

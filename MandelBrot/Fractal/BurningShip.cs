@@ -1,6 +1,9 @@
-﻿namespace Fractal
+﻿using Fractals.DrawEngine;
+
+namespace Fractal
 {
-    public class BurningShip : BaseFractal
+    public class BurningShip<T> : BaseFractal<T>
+        where T : IDrawEngine, new()
     {
         public BurningShip(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 

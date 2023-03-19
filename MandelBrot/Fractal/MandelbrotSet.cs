@@ -1,6 +1,9 @@
-﻿namespace Fractal
+﻿using Fractals.DrawEngine;
+
+namespace Fractal
 {
-    public class MandelbrotSet : BaseFractal
+    public class MandelbrotSet<T> : BaseFractal<T>
+        where T : IDrawEngine, new()
     {
         public MandelbrotSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 

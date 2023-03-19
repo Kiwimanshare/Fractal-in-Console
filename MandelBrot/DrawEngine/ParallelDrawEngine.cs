@@ -2,27 +2,20 @@
 
 namespace Fractals.DrawEngine
 {
-    public class ParallelDrawEngine : IDrawEngine
+    public class ParallelDrawEngine : BaseDrawEngine
     {
-        public BaseFractal Fractal { get; set; }
-
-        public ParallelDrawEngine(BaseFractal fractal)
-        {
-            Fractal = fractal;
-        }
-
-        public void Draw()
+        public override void Draw(int height, int width)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
-            ColorChar[,] buffer = Fractal.Iterate();
+            ColorChar[,] buffer = IterateFunc.Invoke();
 
             object lockObj = new object();
 
-            Parallel.For(0, Fractal.Height, y =>
+            Parallel.For(0, height, y =>
             {
-                for (int x = 0; x < Fractal.Width; x++)
+                for (int x = 0; x < width; x++)
                 {
                     ColorChar colorChar = buffer[x, y];
                     lock (lockObj)

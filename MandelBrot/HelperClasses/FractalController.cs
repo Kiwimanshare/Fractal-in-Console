@@ -2,7 +2,8 @@
 
 namespace Fractal
 {
-    public class FractalController
+    public class FractalController<T>
+        where T : IDrawEngine, new()
     {
         public int Width;
         public int Height;
@@ -31,13 +32,13 @@ namespace Fractal
             switch (fractal)
             {
                 case FractalTyps.MandelbrotSet:
-                    return new MandelbrotSet(Width, Height, currentcolorChars);
+                    return new MandelbrotSet<T>(Width, Height, currentcolorChars);
                 case FractalTyps.JuliaSet:
-                    return new JuliaSet(Width, Height, currentcolorChars);
+                    return new JuliaSet<T>(Width, Height, currentcolorChars);
                 case FractalTyps.BurningShip:
-                    return new BurningShip(Width, Height, currentcolorChars);
+                    return new BurningShip<T>(Width, Height, currentcolorChars);
                 default:
-                    return new MandelbrotSet(Width, Height, currentcolorChars);
+                    return new MandelbrotSet<T>(Width, Height, currentcolorChars);
             }
         }
 
