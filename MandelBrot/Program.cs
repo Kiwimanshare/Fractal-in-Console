@@ -69,7 +69,7 @@ namespace Fractal
 
             while (true)
             {
-                option = ShowMenu(width, height, "Main menu", menuOptions, option);
+                option = ShowMenu(width, "Main menu", menuOptions, option);
 
                 switch (option)
                 {
@@ -86,7 +86,7 @@ namespace Fractal
                         displayFractal = true;
                         break;
                     case 3:
-                        drawEngine = ShowMenu(width, height, "Set Draw Engine", drawEngineMenu);
+                        drawEngine = ShowMenu(width, "Set Draw Engine", drawEngineMenu);
                         break;
                     case 4:
                         ColorPalette newPalette = ColorPalettBuilder.CreateCustomPalette();
@@ -130,7 +130,7 @@ namespace Fractal
             fc.Run();
         }
 
-        static int ShowMenu(int width, int height, string title, string[] options, int currentOption = 0)
+        static int ShowMenu(int width, string title, string[] options, int currentOption = 0)
         {
             Console.CursorVisible = false;
 
