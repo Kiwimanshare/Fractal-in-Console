@@ -167,15 +167,12 @@
         {
             Console.Clear();
 
-            // Breite und Höhe des Menüs berechnen
             int menuWidth = options.Max(o => o.Length) + 4;
             int menuHeight = options.Length + 4;
 
-            // Position des Menüs berechnen
             int left = (windowWidth - menuWidth) / 2;
             int top = (windowHeight - menuHeight) / 2;
 
-            // Menürahmen zeichnen
             Console.SetCursorPosition(left, top);
             Console.Write("╔" + new string('═', menuWidth - 2) + "╗");
             for (int i = 1; i < menuHeight - 1; i++)
@@ -188,17 +185,14 @@
             Console.SetCursorPosition(left, top + menuHeight - 1);
             Console.Write("╚" + new string('═', menuWidth - 2) + "╝");
 
-            // Menüoptionen schreiben
             for (int i = 0; i < options.Length; i++)
             {
                 Console.SetCursorPosition(left + 2, top + i + 2);
                 Console.Write(options[i]);
             }
 
-            // Cursor positionieren
             Console.SetCursorPosition(left + 2, top + options.Length + 2);
 
-            // Menü anzeigen
             Console.CursorVisible = false;
             Console.Read();
         }

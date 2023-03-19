@@ -21,7 +21,6 @@
                 }),
                 new ColorPalette(new List<ColorChar>
                 {
-                    // Die ursprüngliche Farbpalette
                     new ColorChar(ConsoleColor.DarkBlue,   ConsoleColor.Black, '.'),
                     new ColorChar(ConsoleColor.Blue,       ConsoleColor.Black, ':'),
                     new ColorChar(ConsoleColor.Cyan,       ConsoleColor.Black, '+'),
@@ -33,7 +32,6 @@
                 }),
                 new ColorPalette(new List<ColorChar>
                 {
-                    // Eine alternative Farbpalette
                     new ColorChar(ConsoleColor.DarkMagenta, ConsoleColor.Black, '.'),
                     new ColorChar(ConsoleColor.DarkRed,     ConsoleColor.Black, ':'),
                     new ColorChar(ConsoleColor.Red,         ConsoleColor.Black, '+'),
