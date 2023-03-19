@@ -1,4 +1,6 @@
-﻿namespace Fractal
+﻿using Fractals.DrawEngine;
+
+namespace Fractal
 {
     public class FractalController
     {
