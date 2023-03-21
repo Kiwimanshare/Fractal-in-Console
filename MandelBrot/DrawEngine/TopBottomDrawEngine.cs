@@ -9,16 +9,16 @@ namespace Fractals.DrawEngine
 {
     public class TopBottomDrawEngine : BaseDrawEngine
     {
-        public override void Draw(int height, int width)
+        public override void Draw()
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
 
             ColorChar[,] buffer = IterateFunc.Invoke();
 
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     ColorChar colorChar = buffer[x, y];
                     Console.ForegroundColor = colorChar.ForegroundColor;

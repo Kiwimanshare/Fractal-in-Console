@@ -49,7 +49,7 @@ namespace Fractals.DrawEngine
             return ci;
         }
 
-        public override void Draw(int height, int width)
+        public override void Draw()
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
@@ -58,18 +58,18 @@ namespace Fractals.DrawEngine
 
             IntPtr hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-            CHAR_INFO[] charInfoBuffer = new CHAR_INFO[width * height];
-            for (int y = 0; y < height; y++)
+            CHAR_INFO[] charInfoBuffer = new CHAR_INFO[Width * Height];
+            for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < Width; x++)
                 {
-                    charInfoBuffer[y * width + x] = ToCharInfo(buffer[x, y]);
+                    charInfoBuffer[y * Width + x] = ToCharInfo(buffer[x, y]);
                 }
             }
 
-            COORD bufferSize = new COORD { X = (short)width, Y = (short)height };
+            COORD bufferSize = new COORD { X = (short)Width, Y = (short)Height };
             COORD bufferCoord = new COORD { X = 0, Y = 0 };
-            SMALL_RECT writeRegion = new SMALL_RECT { Left = 0, Top = 0, Right = (short)(width - 1), Bottom = (short)(height - 1) };
+            SMALL_RECT writeRegion = new SMALL_RECT { Left = 0, Top = 0, Right = (short)(Width - 1), Bottom = (short)(Height - 1) };
 
             WriteConsoleOutput(hConsole, charInfoBuffer, bufferSize, bufferCoord, ref writeRegion);
 

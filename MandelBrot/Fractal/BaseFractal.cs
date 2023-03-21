@@ -2,8 +2,7 @@
 
 namespace Fractal
 {
-    public class BaseFractal<T> : IFractal
-        where T : IDrawEngine, new()
+    public class BaseFractal: IFractal
     {
         protected ColorChar[] ColorChars;
         protected double imaginaryMax = 1.0;
@@ -17,19 +16,12 @@ namespace Fractal
         public int Height { get; protected set; }
         public int Width { get; protected set; }
 
-        public T drawEngine { get; protected set; }
-
         public BaseFractal(int width, int height, ColorChar[] colorChars)
         {
             Width = width;
             Height = height;
             ColorChars = colorChars;
-
-            drawEngine = new T();
-            drawEngine.IterateFunc = Iterate;
         }
-
-        public void Draw() => drawEngine.Draw(Height, Width);
 
         public void ChangeColor(ColorChar[] colorChars)
         {

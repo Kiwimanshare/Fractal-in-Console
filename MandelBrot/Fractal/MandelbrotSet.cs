@@ -2,8 +2,7 @@
 
 namespace Fractal
 {
-    public class MandelbrotSet<T> : BaseFractal<T>
-        where T : IDrawEngine, new()
+    public class MandelbrotSet : BaseFractal
     {
         public MandelbrotSet(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 

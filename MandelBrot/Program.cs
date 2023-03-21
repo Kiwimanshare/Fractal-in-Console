@@ -1,5 +1,4 @@
 ﻿using Fractals.DrawEngine;
-using System.Reflection.PortableExecutable;
 
 namespace Fractal
 {
@@ -57,8 +56,7 @@ namespace Fractal
                 height = 60;
             }
 
-            Console.WindowWidth = width;
-            Console.WindowHeight = height + 1;
+            Console.SetWindowSize(width, height + 1);
 
             FractalTyps selectedFractal = FractalTyps.MandelbrotSet;
             List<ColorPalette> colorPalettes = ColorPalettBuilder.BuildColorPalette();
@@ -116,7 +114,7 @@ namespace Fractal
                             RunFractal<FastDrawEngine>(width, height, selectedFractal, colorPalettes);
                             break;
                         default:
-                            RunFractal<TopBottomDrawEngine>(width, height, selectedFractal, colorPalettes);
+                            RunFractal<FastDrawEngine>(width, height, selectedFractal, colorPalettes);
                             break;
                     }                    
                 }

@@ -2,8 +2,7 @@
 
 namespace Fractal
 {
-    public class BurningShip<T> : BaseFractal<T>
-        where T : IDrawEngine, new()
+    public class BurningShip : BaseFractal
     {
         public BurningShip(int width, int height, ColorChar[] colorChars) : base(width, height, colorChars) { }
 

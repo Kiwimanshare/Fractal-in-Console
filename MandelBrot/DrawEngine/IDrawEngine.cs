@@ -9,7 +9,9 @@ namespace Fractals.DrawEngine
 {
     public interface IDrawEngine
     {
+        public int Height { get; set; }
+        public int Width { get; set; }
         public Func<ColorChar[,]> IterateFunc { get; set; }
-        public void Draw(int height, int width);
+        public void Draw();
     }
 }

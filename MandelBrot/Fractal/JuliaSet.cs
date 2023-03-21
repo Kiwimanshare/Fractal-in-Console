@@ -2,8 +2,7 @@
 
 namespace Fractal
 {
-    public class JuliaSet<T> : BaseFractal<T>
-        where T : IDrawEngine, new()
+    public class JuliaSet : BaseFractal
     {
         private double cReal = -0.8;
         private double cImaginary = 0.156;

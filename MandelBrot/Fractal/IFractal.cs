@@ -11,7 +11,7 @@
     {
         int Width { get; }
         int Height { get; }
-        void Draw();
+        public ColorChar[,] Iterate();
         void Zoom(int cursorPosX, int cursorPosY, double zoomFactor);
         void ChangeColor(ColorChar[] colorChars);
     }
